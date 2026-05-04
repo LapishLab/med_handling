@@ -111,9 +111,14 @@ classdef BaseMed < dynamicprops
 
         function gpio = get_pi_gpio(obj, gpio_path)
             gpio = readtable(gpio_path);
-            dt = datetime(gpio.Time, 'InputFormat', 'yyyyMMdd_HHmmss_SSSSSS', ...
-                'TimeZone', 'America/Indianapolis');
-            gpio.posix = posixtime(dt);
+            if isempty(gpio)
+                gpio.posix = zeros(0);
+                warning("GPIO table is empty")
+            else
+                dt = datetime(gpio.Time, 'InputFormat', 'yyyyMMdd_HHmmss_SSSSSS', ...
+                    'TimeZone', 'America/Indianapolis');
+                gpio.posix = posixtime(dt);
+            end
         end
     end
 end
