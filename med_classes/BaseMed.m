@@ -93,6 +93,11 @@ classdef BaseMed < dynamicprops
         end
 
         function convert2posix(obj)
+            if obj.sync_success
+                warning("Arrays have already been converted to POSIX. I'm not doing it again.")
+                return
+            end
+            
             plot(obj.sync_med, obj.sync_posix)
             p_fit = polyfit(obj.sync_med,obj.sync_posix,1);
 
